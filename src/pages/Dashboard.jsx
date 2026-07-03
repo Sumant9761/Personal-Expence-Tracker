@@ -8,6 +8,7 @@ import { auth, db } from '../firebase';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import moment from 'moment';
+import TransactionTable from '../components/TransactionTable';
 
 
 
@@ -136,6 +137,7 @@ const Dashboard = () => {
             handleIncomeCancel={handleIncomeCancel}
             onFinish={onFinish}
           />
+          <TransactionTable transactions={transactions} />
         </>
         )
       }
