@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import moment from 'moment';
 import TransactionTable from '../components/TransactionTable';
+import ChartComponent from '../components/Charts';
+import NoTransactions from '../components/NoTransactions';
 
 
 
@@ -112,6 +114,9 @@ const Dashboard = () => {
     setLoading(false);
   }
 
+  let sortedTransactions = transactions.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date); 
+  })
 
   return (
     <div>
@@ -127,6 +132,7 @@ const Dashboard = () => {
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
           />
+          {transactions.length != 0 ? <ChartComponent sortedTransactions={sortedTransactions} /> : <NoTransactions />}
           <AddExpenseModal 
             isExpenseModalVisible={isExpenseModalVisible}
             handleExpenseCancel={handleExpenseCancel}
