@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import Cards from '../components/Cards'
 import AddExpenseModal from '../components/Modals/addExpense';
 import AddIncomeModal from '../components/Modals/addIncome';
-import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -43,12 +43,17 @@ const Dashboard = () => {
   const onFinish = (values, type) => {
     const newTransaction = {
       type: type,
-      date: moment(values.date).format("YYYY-MM-DD"),
+      date: values.date.format("YYYY-MM-DD"),
       amount: parseFloat(values.amount),
       tag: values.tag,
       name: values.name,
     }
     addTransaction(newTransaction);
+    if(type === 'expense'){
+      setIsExpenseModalVisible(false);
+    }else{
+      setIsIncomeModalVisible(false);
+    }
   }
 
   async function addTransaction(transaction, many){
@@ -60,9 +65,7 @@ const Dashboard = () => {
       )
       console.log("Document written with ID: ", docRef.id);
       if (!many) toast.success("Transaction Added!");
-      let newArr = transactions;
-      newArr.push(transaction);
-      setTransactions(newArr);
+      setTransactions([...transactions, transaction]);
       calculateBalance();
     }catch(e){
       console.error("Error adding document: ", e)
@@ -114,7 +117,32 @@ const Dashboard = () => {
     setLoading(false);
   }
 
-  let sortedTransactions = transactions.sort((a, b) => {
+  async function resetBalance() {
+    if (!window.confirm("Are you sure you want to reset your balance? This will delete all your transactions.")) {
+      return;
+    }
+    setLoading(true);
+    if (user) {
+      try {
+        const q = query(collection(db, `users/${user.uid}/transactions`));
+        const querySnapshot = await getDocs(q);
+        const deletePromises = [];
+        querySnapshot.forEach((doc) => {
+          deletePromises.push(deleteDoc(doc.ref));
+        });
+        await Promise.all(deletePromises);
+        setTransactions([]);
+        calculateBalance();
+        toast.success("Balance Reset!");
+      } catch (e) {
+        console.error("Error resetting balance: ", e);
+        toast.error("Couldn't reset balance");
+      }
+    }
+    setLoading(false);
+  }
+
+  let sortedTransactions = [...transactions].sort((a, b) => {
     return new Date(a.date) - new Date(b.date); 
   })
 
@@ -131,6 +159,7 @@ const Dashboard = () => {
             totalBalance={totalBalance}
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
+            resetBalance={resetBalance}
           />
           {transactions.length != 0 ? <ChartComponent sortedTransactions={sortedTransactions} /> : <NoTransactions />}
           <AddExpenseModal 

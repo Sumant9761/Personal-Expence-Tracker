@@ -64,10 +64,17 @@ const AddExpenseModal = ({
                     rules={[{ required: true, message: "Please select a tag!" }]}
                 >
                     <Select className='select-input-2'>
-                        <Select.Option value='salary'>Salary</Select.Option>
-                        <Select.Option value='freelance'>Freelance</Select.Option>
-                        <Select.Option value='investment'>Investment</Select.Option>
-                        {/* {Add more tags here} */}
+                        <Select.Option value='food'>Food</Select.Option>
+                        <Select.Option value='transport'>Transport</Select.Option>
+                        <Select.Option value='shopping'>Shopping</Select.Option>
+                        <Select.Option value='bills'>Bills</Select.Option>
+                        <Select.Option value='healthcare'>Healthcare</Select.Option>
+                        <Select.Option value='education'>Education</Select.Option>
+                        <Select.Option value='entertainment'>Entertainment</Select.Option>
+                        <Select.Option value='travel'>Travel</Select.Option>
+                        <Select.Option value='rent'>Rent</Select.Option>
+                        <Select.Option value='emi'>EMI</Select.Option>
+                        <Select.Option value='other'>Other</Select.Option>
                     </Select>
                 </Form.Item> 
                 <Form.Item>
