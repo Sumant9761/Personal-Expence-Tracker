@@ -31,14 +31,13 @@ const ChartComponent = ({ sortedTransactions }) => {
 
     const config = {
         data: data,
-        width: 500,
         autoFit: true,
         xField: 'date',
         yField: 'amount',
     };
     const spendingConfig = {
         data: Object.values(finalSpendings),
-        width: 500,
+        autoFit: true,
         angleField: 'amount',
         colorField: 'tag',
         scale: {

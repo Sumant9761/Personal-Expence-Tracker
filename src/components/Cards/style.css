@@ -2,7 +2,7 @@
     box-shadow: var(--shadow);
     margin: 1rem;
     border-radius: 0.5rem;
-    min-width: 400px;
+    min-width: 320px;
     flex: 1;
 }
 
@@ -19,7 +19,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 2rem auto; 
+    margin: 2rem 1.5rem; 
     flex-wrap: wrap;
     gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .my-row {
+        margin: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-card {
+        min-width: 100%;
+        margin: 0.5rem 0;
+    }
 }

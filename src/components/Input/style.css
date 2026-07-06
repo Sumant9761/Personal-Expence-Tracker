@@ -20,6 +20,6 @@
     opacity: 1;
     transition: all 0.2s;
 }
-.custom-input:placeholder{
+.custom-input::placeholder{
     color: grey;
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import searchImg from '../../assets/search.svg'
 import { parse, unparse } from 'papaparse';
 import { toast } from 'react-toastify';
+import './style.css';
 
 
 const TransactionTable = ({ transactions, addTransaction, fetchTransactions }) => {
@@ -95,21 +96,8 @@ const TransactionTable = ({ transactions, addTransaction, fetchTransactions }) =
     }
 
   return (
-    <div
-        style={{
-            width: "97%",
-            padding: "0rem 2rem"
-        }}
-    >
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "1rem",
-                alignItems: "center",
-                marginBottom: "1rem",
-            }}
-        >
+    <div className="table-container">
+        <div className="search-filter-container">
             <div className="input-flex">
                 <img src={searchImg} width='16' />
                 <input 
@@ -132,15 +120,7 @@ const TransactionTable = ({ transactions, addTransaction, fetchTransactions }) =
             </Select>
         </div>
         <div className='my-table'>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                    marginBottom: "1rem",
-                }}
-            >
+            <div className="table-header-container">
                 <h2>My Transactions</h2>
 
                 <Radio.Group
@@ -152,18 +132,11 @@ const TransactionTable = ({ transactions, addTransaction, fetchTransactions }) =
                     <Radio.Button value="date">Sort by Date</Radio.Button>
                     <Radio.Button value="amount">Sort by Amount</Radio.Button>
                 </Radio.Group>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: "1rem",
-                        width: "400px",
-                    }}
-                >
+                <div className="table-actions-container">
                     <button className='btn' onClick={exportCSV}>
                         Export to CSV
                     </button>
-                    <label for="file-csv" className='btn btn-blue'>
+                    <label htmlFor="file-csv" className='btn btn-blue'>
                         Import from CSV
                     </label>
                     <input 
@@ -176,7 +149,7 @@ const TransactionTable = ({ transactions, addTransaction, fetchTransactions }) =
                     />
                 </div>
             </div>
-            <Table dataSource={sortedTransactions} columns={columns} />
+            <Table dataSource={sortedTransactions} columns={columns} scroll={{ x: true }} />
         </div>
     </div>
     

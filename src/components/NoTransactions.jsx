@@ -13,7 +13,7 @@ const NoTransactions = () => {
             marginBottom: "2rem",
         }}
     >
-        <img src={transactions} style={{ width: "400px", margin: "4rem" }} />
+        <img src={transactions} style={{ width: "80%", maxWidth: "400px", margin: "4rem auto" }} />
         <p style={{ textAlign: "center", fontSize: "1.2rem" }}>
             You have No Transactions Currently
         </p>

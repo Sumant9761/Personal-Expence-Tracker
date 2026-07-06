@@ -1,18 +1,47 @@
-.wrapper,
-.charts-wrapper {
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 90vh;
+    width: 100%;
+    min-height: 90vh;
+    box-sizing: border-box;
+    padding: 2rem 1rem;
 }
 
 .charts-wrapper {
-    width: 93%;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 93%;
     height: auto;
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: var(--shadow);
-    margin: 2rem;
+    margin: 2rem auto;
+    box-sizing: border-box;
+}
+
+.charts-wrapper > div {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+}
+
+.charts-wrapper > div:first-child {
+    margin-right: 2rem;
+}
+
+@media (max-width: 992px) {
+    .charts-wrapper {
+        flex-direction: column;
+        width: calc(100% - 2rem);
+        margin: 1rem;
+        padding: 1.5rem;
+        gap: 2rem;
+    }
+    
+    .charts-wrapper > div:first-child {
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+    }
 }
